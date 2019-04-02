@@ -45,14 +45,37 @@ class App extends Component {
     return (
       <Fragment>
         <Header />
+        { loading && <LoadingWrapper>
+          <img
+            src='https://www.gifmania.fr/Gif-Animes-Manga-Anime/Animations-Pokemon/Images-Poke-Ball/Poke-Ball-17369.gif'
+            alt='wczytywanie'
+          />
+                     </LoadingWrapper>}
         <Wrapper>
-          { loading && <div>Wczytywanie</div> }
           {pokemonsArray.map(singlePokemon => <PokemnonItem key={singlePokemon.id} pokemonData={singlePokemon} />)}
         </Wrapper>
       </Fragment>
     )
   }
 }
+
+const LoadingWrapper = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #a0a5a57d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+  img {
+    width: 200px;
+    height: 200px;
+  }
+`
 
 const Wrapper = styled.div`
   display: flex;
