@@ -5,16 +5,40 @@ import PokemnonItem from './PokemnonItem.jsx'
 import Header from './Header.jsx'
 
 class App extends Component {
-  state = {
-    page: 1,
-    lastPage: false,
-    pageSize: 20,
-    loading: false,
-    pokemonsArray: []
+  constructor (props) {
+    super(props)
+    this.state = {
+      page: 1,
+      lastPage: false,
+      pageSize: 20,
+      loading: false,
+      pokemonsArray: []
+    }
+
+    this.listRef = React.createRef()
   }
 
   componentDidMount () {
     this.getPokemonData()
+    // scroll event
+    window.addEventListener('scroll', this.checkIsBottom)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('scroll', this.checkIsBottom)
+  }
+
+  checkIsBottom = (_) => {
+    const { lastPage } = this.state
+
+    const d = document.documentElement
+    const offset = d.scrollTop + window.innerHeight
+    const height = d.offsetHeight
+
+    if (height * 0.8 < offset && !lastPage) {
+      window.removeEventListener('scroll', this.checkIsBottom)
+      this.getPokemonData()
+    }
   }
 
   getPokemonData = (_) => {
@@ -27,9 +51,11 @@ class App extends Component {
           data.json().then((resp) => {
             this.setState(prevState => ({
               loading: false,
-              pokemonsArray: prevState.pokemonsArray.concat(resp.cards)
-              lastPage: resp.cards.length < 20
+              pokemonsArray: prevState.pokemonsArray.concat(resp.cards),
+              lastPage: resp.cards.length < 20,
+              page: prevState.page + 1
             }))
+            window.addEventListener('scroll', this.checkIsBottom)
           })
         } else {
           console.warn('Wystapił błąd')
@@ -65,7 +91,7 @@ class App extends Component {
 }
 
 const LoadingWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   top: 0;
