@@ -1,0 +1,67 @@
+{
+    "extends": [
+      "airbnb",
+      "standard",
+      "standard-jsx",
+      "standard-react"
+    ],
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "experimentalDecorators": true
+    },
+    "rules": {
+      "arrow-body-style": [
+        "error",
+        "as-needed"
+      ],
+      "max-len": [
+        "error",
+        {
+          "code": 120,
+          "ignoreUrls": true
+        }
+      ],
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ],
+      "prefer-const": "error",
+      "prefer-template": "error",
+      "react/jsx-closing-bracket-location": [
+        "error",
+        "line-aligned"
+      ],
+      "react/jsx-first-prop-new-line": [
+        "error",
+        "multiline-multiprop"
+      ],
+      "react/jsx-max-props-per-line": [
+        "error",
+        {
+          "maximum": 1,
+          "when": "multiline"
+        }
+      ],
+      "react/jsx-sort-props": [
+        "off",
+        {
+          "callbacksLast": false,
+          "ignoreCase": true,
+          "noSortAlphabetically": false,
+          "reservedFirst": true,
+          "shorthandFirst": false,
+          "shorthandLast": false
+        }
+      ],
+      "react/jsx-wrap-multilines": [
+        "error",
+        {
+          "arrow": true,
+          "assignment": true,
+          "declaration": true,
+          "return": true
+        }
+      ],
+      "standard/no-callback-literal": "off"
+    }
+  }
