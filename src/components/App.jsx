@@ -1,6 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
+
 import PokemnonItem from './PokemnonItem.jsx'
+import Header from './Header.jsx'
 
 class App extends Component {
   state = {
@@ -40,15 +42,14 @@ class App extends Component {
 
   render () {
     const { loading, pokemonsArray } = this.state
-    console.log(pokemonsArray)
     return (
-      <div>
-        { loading && <div>Wczytywanie</div> }
-
+      <Fragment>
+        <Header />
         <Wrapper>
-          {pokemonsArray.map(singlePokemon => <PokemnonItem pokemonData={singlePokemon} />)}
+          { loading && <div>Wczytywanie</div> }
+          {pokemonsArray.map(singlePokemon => <PokemnonItem key={singlePokemon.id} pokemonData={singlePokemon} />)}
         </Wrapper>
-      </div>
+      </Fragment>
     )
   }
 }
