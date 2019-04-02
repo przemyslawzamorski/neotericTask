@@ -15,7 +15,14 @@ const PokemnonItem = ({ pokemonData }) => {
 }
 
 const Wrapper = styled.div`
-  flex: 1 10 30%;
+  @media (min-width: 425px) {
+    flex: 1 10 30%;
+  }
+
+  @media (max-width: 424px) {
+    width: 100%;
+  }
+
   max-width: 400px;
   margin: 10px;
   border: 1px solid rgba(173,173,173,1);
@@ -23,6 +30,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  cursor: pointer;
 
   > img {
     width: 100%;

@@ -7,6 +7,7 @@ import Header from './Header.jsx'
 class App extends Component {
   state = {
     page: 1,
+    lastPage: false,
     pageSize: 20,
     loading: false,
     pokemonsArray: []
@@ -20,13 +21,14 @@ class App extends Component {
     const { page, pageSize } = this.state
     this.setState({ loading: true })
     // eslint-disable-next-line no-undef
-    fetch(`https://api.pokemontcg.io/v1/cards?page=${page}&pageSize=${pageSize}`)
+    fetch(`https://api.pokemontcg.io/v1/cards?page=${page}&pageSize=${pageSize}&supertype=pokemon`)
       .then((data) => {
         if (data.ok) {
           data.json().then((resp) => {
             this.setState(prevState => ({
               loading: false,
               pokemonsArray: prevState.pokemonsArray.concat(resp.cards)
+              lastPage: resp.cards.length < 20
             }))
           })
         } else {
@@ -41,18 +43,21 @@ class App extends Component {
   }
 
   render () {
-    const { loading, pokemonsArray } = this.state
+    const { loading, pokemonsArray, lastPage } = this.state
     return (
       <Fragment>
         <Header />
-        { loading && <LoadingWrapper>
-          <img
-            src='https://www.gifmania.fr/Gif-Animes-Manga-Anime/Animations-Pokemon/Images-Poke-Ball/Poke-Ball-17369.gif'
-            alt='wczytywanie'
-          />
-                     </LoadingWrapper>}
+        { loading &&
+          <LoadingWrapper>
+            <img
+              src='https://www.gifmania.fr/Gif-Animes-Manga-Anime/Animations-Pokemon/Images-Poke-Ball/Poke-Ball-17369.gif'
+              alt='wczytywanie'
+            />
+          </LoadingWrapper>
+        }
         <Wrapper>
           {pokemonsArray.map(singlePokemon => <PokemnonItem key={singlePokemon.id} pokemonData={singlePokemon} />)}
+          {lastPage && <NoMoreData>To już wszystkie pokemony w bazie danych</NoMoreData>}
         </Wrapper>
       </Fragment>
     )
@@ -83,6 +88,13 @@ const Wrapper = styled.div`
   margin: 0 auto;
   flex-wrap: wrap;
   justify-content: center;
+`
+
+const NoMoreData = styled.div`
+  display: flex;
+  margin: 20px;
+  justify-content: center;
+  width: 100%;
 `
 
 export default App
