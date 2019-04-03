@@ -173,10 +173,18 @@ const Content = styled.div`
 `
 const PokemonContent = styled.div`
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 
   img {
-    width: 40%;
-    height: 40%;
+    width: 50%;
+    height: 50%;
+
+    @media (max-width: 550px) {
+      width: 100%;
+      order: 2;
+      margin-bottom: 10px;
+    }
   }
 
   .close {
@@ -186,6 +194,13 @@ const PokemonContent = styled.div`
     opacity: 0.3;
     cursor: pointer;
     margin-left: auto;
+    align-self: flex-start;
+
+    @media (max-width: 550px) {
+      width: 100%;
+      order: 1;
+      margin-bottom: 10px;
+    }
   }
   .close:hover {
     opacity: 1;
@@ -207,6 +222,12 @@ const PokemonContent = styled.div`
 `
 const PokemonDetails = styled.div`
   margin-left: 20px;
+
+  @media (max-width: 550px) {
+      width: 100%;
+      order: 3;
+      margin: 0px 0px 10px;
+    }
 `
 const Label = styled.p`
   font-size: 18px;
