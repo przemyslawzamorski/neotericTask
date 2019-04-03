@@ -53,7 +53,7 @@ class Modal extends Component {
     return (
       <SimilarPokemons>
         <Title>
-        Similiar pokemons
+          Similiar pokemons
         </Title>
         <SimilarInner>
           {similar.map(similarPokemon => (

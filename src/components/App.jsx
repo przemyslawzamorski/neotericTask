@@ -71,7 +71,15 @@ class App extends Component {
       })
   }
 
-  setSelected = selected => _ => this.setState({ selected })
+  setSelected = selected => (_) => {
+    this.setState({ selected })
+    document.getElementsByTagName('body')[0].style.overflow = 'hidden'
+  }
+
+  closeModal = () => {
+    this.setState({ selected: null })
+    document.getElementsByTagName('body')[0].style.overflow = 'auto'
+  }
 
   render () {
     const {
@@ -85,7 +93,7 @@ class App extends Component {
         }
 
         { selected &&
-          <Modal pokemonData={selected} closeModalFunc={_ => this.setState({ selected: null })} />
+          <Modal pokemonData={selected} closeModalFunc={this.closeModal} />
         }
 
         <Wrapper>
