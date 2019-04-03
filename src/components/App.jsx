@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import PokemnonItem from './PokemnonItem.jsx'
 import Header from './Header.jsx'
 import LoadingWrapper from './LoadingWrapper.jsx'
+import Modal from './Modal.jsx'
 
 class App extends Component {
   constructor (props) {
@@ -13,7 +14,8 @@ class App extends Component {
       lastPage: false,
       pageSize: 20,
       loading: false,
-      pokemonsArray: []
+      pokemonsArray: [],
+      selected: null
     }
 
     this.listRef = React.createRef()
@@ -69,16 +71,32 @@ class App extends Component {
       })
   }
 
+  setSelected = selected => _ => this.setState({ selected })
+
   render () {
-    const { loading, pokemonsArray, lastPage } = this.state
+    const {
+      loading, pokemonsArray, lastPage, selected
+    } = this.state
     return (
       <Fragment>
         <Header />
         { loading &&
           <LoadingWrapper isGlobal withBackground />
         }
+
+        { selected &&
+          <Modal pokemonData={selected} closeModalFunc={_ => this.setState({ selected: null })} />
+        }
+
         <Wrapper>
-          {pokemonsArray.map(singlePokemon => <PokemnonItem key={singlePokemon.id} pokemonData={singlePokemon} />)}
+          {pokemonsArray.map(singlePokemon => (
+            <PokemnonItem
+              key={singlePokemon.id}
+              pokemonData={singlePokemon}
+              onSelect={this.setSelected(singlePokemon)}
+            />
+          ))
+          }
           {lastPage && <NoMoreData>To już wszystkie pokemony w bazie danych</NoMoreData>}
         </Wrapper>
       </Fragment>

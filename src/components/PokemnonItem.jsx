@@ -2,35 +2,15 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-import Modal from './Modal.jsx'
-
 class PokemnonItem extends Component {
-  state = {
-    isModalVisible: false
-  }
-
-  closeModal = (event) => {
-    event.stopPropagation()
-    this.setState({ isModalVisible: false })
-  }
-
-  openModal = (_) => {
-    this.setState({ isModalVisible: true })
-  }
-
   render () {
-    const { isModalVisible } = this.state
-    const { pokemonData, small } = this.props
+    const { pokemonData, small, onSelect } = this.props
 
     return (
-      <Wrapper small={small} onClick={e => (!small ? this.openModal() : null)}>
+      <Wrapper small={small} onClick={onSelect}>
         <img src={pokemonData.imageUrlHiRes} alt='fotka' />
         <Name small={small}>{pokemonData.name}</Name>
         <Supertype small={small}>{pokemonData.supertype}</Supertype>
-
-        { isModalVisible &&
-          <Modal pokemonData={pokemonData} closeModalFunc={this.closeModal} />
-        }
       </Wrapper>
     )
   }
@@ -83,11 +63,13 @@ PokemnonItem.propTypes = {
     name: PropTypes.string,
     supertype: PropTypes.string
   }).isRequired,
-  small: PropTypes.bool
+  small: PropTypes.bool,
+  onSelect: PropTypes.func
 }
 
 PokemnonItem.defaultProps = {
-  small: false
+  small: false,
+  onSelect: (_) => {}
 }
 
 export default PokemnonItem
