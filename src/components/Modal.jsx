@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 import PokemnonItem from './PokemnonItem.jsx'
+import LoadingWrapper from './LoadingWrapper.jsx'
 
 class Modal extends Component {
   state ={
@@ -124,6 +125,7 @@ class Modal extends Component {
               </SmallItem>
             </PokemonDetails>
           </PokemonContent>
+          { loading && <LoadingWrapper /> }
           { similar.length && this.renderSimilars()}
         </Content>
       </BackgroundWrapper>

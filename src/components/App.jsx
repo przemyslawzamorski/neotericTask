@@ -75,7 +75,7 @@ class App extends Component {
       <Fragment>
         <Header />
         { loading &&
-          <LoadingWrapper />
+          <LoadingWrapper isGlobal withBackground />
         }
         <Wrapper>
           {pokemonsArray.map(singlePokemon => <PokemnonItem key={singlePokemon.id} pokemonData={singlePokemon} />)}
