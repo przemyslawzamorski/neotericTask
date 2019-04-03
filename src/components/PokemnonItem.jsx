@@ -25,8 +25,8 @@ class PokemnonItem extends Component {
     return (
       <Wrapper small={small} onClick={e => (!small ? this.openModal() : null)}>
         <img src={pokemonData.imageUrlHiRes} alt='fotka' />
-        <Name>{pokemonData.name}</Name>
-        <Supertype>{pokemonData.supertype}</Supertype>
+        <Name small={small}>{pokemonData.name}</Name>
+        <Supertype small={small}>{pokemonData.supertype}</Supertype>
 
         { isModalVisible &&
           <Modal pokemonData={pokemonData} closeModalFunc={this.closeModal} />
@@ -38,7 +38,9 @@ class PokemnonItem extends Component {
 
 const Wrapper = styled.div`
   @media (min-width: 425px) {
-    flex: 1 10 30%;
+    ${props => (props.small
+    ? `width: auto;`
+    : `flex: 1 10 30%;`)};
   }
 
   @media (max-width: 424px) {
@@ -52,26 +54,26 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-
   cursor: pointer;
 
   > img {
-    width: 100%;
+    width: ${props => (props.small ? '200px' : '100%')};
   }
 `
 const Name = styled.h1`
   display: flex;
   font-family: Lato;
-  font-size: 26px;
+  font-size: ${props => (props.small ? '20px' : '26px')};
   justify-content: center;
-  margin: 5px;
+  margin: ${props => (props.small ? '5px 0px 0px' : '5px')};
 `
 const Supertype = styled.h2`
   font-family: Lato;
-  font-size: 15px;
+  font-size: ${props => (props.small ? '12px' : '15px')};
   display: flex;
   justify-content: center;
   margin: 5px;
+  margin: ${props => (props.small ? '0px 0px 5px' : '5px')};
   font-weight: 100;
 `
 

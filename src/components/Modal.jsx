@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import PokemnonItem from './PokemnonItem.jsx'
 
 class Modal extends Component {
-  stat ={
+  state ={
     loading: false,
     similar: []
   }
@@ -32,7 +32,7 @@ class Modal extends Component {
           data.json().then((resp) => {
             this.setState(prevState => ({
               loading: false,
-              similar: resp.cards
+              similar: resp.cards.slice(0, 3)
             }))
           })
         } else {
@@ -46,7 +46,25 @@ class Modal extends Component {
       })
   }
 
+  renderSimilars = (_) => {
+    const { similar } = this.state
+
+    return (
+      <SimilarPokemons>
+        <Title>
+        Similiar pokemons
+        </Title>
+        <SimilarInner>
+          {similar.map(similarPokemon => (
+            <PokemnonItem key={`${similarPokemon.name}-as-similar`} pokemonData={similarPokemon} small />))
+          }
+        </SimilarInner>
+      </SimilarPokemons>
+    )
+  }
+
   render () {
+    const { similar, loading } = this.state
     const { pokemonData, closeModalFunc } = this.props
 
     return (
@@ -66,7 +84,7 @@ class Modal extends Component {
               <Label>Series:</Label>
               <Value>{pokemonData.series}</Value>
 
-              <Label>DETAILS</Label>
+              <Label bp>DETAILS</Label>
               <SmallItem>
                 <Label small>Resistances: </Label>
                 <Value small>{this.renderProperty(pokemonData.resistances, 'type')}</Value>
@@ -106,20 +124,30 @@ class Modal extends Component {
               </SmallItem>
             </PokemonDetails>
           </PokemonContent>
-          <SimilarPokemons>
-            <PokemnonItem pokemonData={pokemonData} small />
-          </SimilarPokemons>
+          { similar.length && this.renderSimilars()}
         </Content>
       </BackgroundWrapper>
     )
   }
 }
+
+const SimilarInner = styled.div`
+  display: flex;
+  flex-direction: row;
+`
 const SimilarPokemons = styled.div`
   display: flex;
-  justify-content: center;
+  align-items: center;
   width: 100%;
+  margin-top: 10px;
+  flex-direction: column;
 `
-
+const Title = styled.div`
+  font-size: 20px;
+  font-family: Lato;
+  width: 100%;
+  font-weight: bold;
+`
 const BackgroundWrapper = styled.div`
   position: fixed;
   display: flex;
@@ -127,7 +155,7 @@ const BackgroundWrapper = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   justify-content: center;
   align-items: center;
   cursor: auto;
@@ -144,6 +172,7 @@ const Content = styled.div`
     width: 32px;
     height: 32px;
     opacity: 0.3;
+    cursor: pointer;
   }
   .close:hover {
     opacity: 1;
@@ -172,14 +201,17 @@ const PokemonContent = styled.div`
   }
 `
 const PokemonDetails = styled.div`
-  margin-left: 10px;
-  padding: 10px;
+  margin-left: 20px;
 `
 const Label = styled.p`
   font-size: 18px;
   margin: 0px 0px 5px;
   font-family: Lato;
   font-weight: bold;
+
+  ${props => props.bp && `
+    margin-bottom: 10px;
+  `};
 
   ${props => props.small && `
     font-size: 14px;
@@ -189,7 +221,7 @@ const Label = styled.p`
 `
 const Value = styled.p`
   font-size: 14px;
-  margin: 0px 0px 10px;
+  margin: 0px 0px 5px;
   font-family: Lato;
 
   ${props => props.small && `
