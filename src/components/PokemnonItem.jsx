@@ -1,20 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-class PokemnonItem extends Component {
-  render () {
-    const { pokemonData, small, onSelect } = this.props
-
-    return (
-      <Wrapper small={small} onClick={onSelect}>
-        <img src={pokemonData.imageUrlHiRes} alt='fotka' />
-        <Name small={small}>{pokemonData.name}</Name>
-        <Supertype small={small}>{pokemonData.supertype}</Supertype>
-      </Wrapper>
-    )
-  }
-}
+const PokemnonItem = ({ pokemonData, small, onSelect }) => (
+  <Wrapper small={small} onClick={onSelect}>
+    <img src={pokemonData.imageUrlHiRes} alt='fotka' />
+    <Name small={small}>{pokemonData.name}</Name>
+    <Supertype small={small}>{pokemonData.supertype}</Supertype>
+  </Wrapper>
+)
 
 const Wrapper = styled.div`
   @media (min-width: 425px) {

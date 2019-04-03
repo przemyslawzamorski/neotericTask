@@ -71,8 +71,6 @@ class Modal extends Component {
     return (
       <BackgroundWrapper>
         <Content>
-          <div className='close' onClick={e => closeModalFunc(e)} />
-
           <PokemonContent>
             <img src={pokemonData.imageUrlHiRes} alt='details-foto' />
             <PokemonDetails>
@@ -124,6 +122,7 @@ class Modal extends Component {
                 <Value small>{pokemonData.evolvesFrom || '-'}</Value>
               </SmallItem>
             </PokemonDetails>
+            <div className='close' onClick={e => closeModalFunc(e)} />
           </PokemonContent>
           { loading && <LoadingWrapper /> }
           { similar.length > 0 && this.renderSimilars()}
@@ -169,15 +168,22 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-self: baseline;
+`
+const PokemonContent = styled.div`
+  display: flex;
+
+  img {
+    width: 40%;
+    height: 40%;
+  }
 
   .close {
-    position: absolute;
-    right: 15px;
-    top: 15px;
+    position: relative;
     width: 32px;
     height: 32px;
     opacity: 0.3;
     cursor: pointer;
+    margin-left: auto;
   }
   .close:hover {
     opacity: 1;
@@ -195,14 +201,6 @@ const Content = styled.div`
   }
   .close:after {
     transform: rotate(-45deg);
-  }
-`
-const PokemonContent = styled.div`
-  display: flex;
-
-  img {
-    width: 40%;
-    height: 40%;
   }
 `
 const PokemonDetails = styled.div`
