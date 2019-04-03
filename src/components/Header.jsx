@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   font-weight: bold;
   font-size: 20px;
   text-align: center;
+  font-family: Lato;
 `
 
 export default Header

@@ -1,17 +1,28 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-const PokemnonItem = ({ pokemonData }) => {
-  const onClick = (_) => {}
+import Modal from './Modal.jsx'
 
-  return (
-    <Wrapper>
-      <img src={pokemonData.imageUrlHiRes} alt='fotka' />
-      <Name>{pokemonData.name}</Name>
-      <Supertype>{pokemonData.supertype}</Supertype>
-    </Wrapper>
-  )
+class PokemnonItem extends Component {
+  state = {
+    isModalVisible: false
+  }
+
+  render () {
+    const { isModalVisible } = this.state
+    const { pokemonData } = this.props
+
+    return (
+      <Wrapper onClick={e => this.setState({ isModalVisible: true })}>
+        <img src={pokemonData.imageUrlHiRes} alt='fotka' />
+        <Name>{pokemonData.name}</Name>
+        <Supertype>{pokemonData.supertype}</Supertype>
+
+        { isModalVisible && <Modal pokemonData={pokemonData} /> }
+      </Wrapper>
+    )
+  }
 }
 
 const Wrapper = styled.div`
@@ -51,6 +62,7 @@ const Supertype = styled.h2`
   display: flex;
   justify-content: center;
   margin: 5px;
+  font-weight: 100;
 `
 
 PokemnonItem.propTypes = {
