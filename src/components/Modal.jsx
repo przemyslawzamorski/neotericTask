@@ -151,21 +151,24 @@ const Title = styled.div`
   font-weight: bold;
 `
 const BackgroundWrapper = styled.div`
-  position: fixed;
+  position: fixed; 
+  overflow-y: auto;
+  top: 0; right: 0; bottom: 0; left: 0;
   display: flex;
   background-color: #b5b5b5ab;
-  top: 0;
-  left: 0;
   width: 100%;
   min-height: 100%;
   justify-content: center;
-  align-items: center;
   cursor: auto;
+  padding: 20px;
+  box-sizing: border-box;
 `
 const Content = styled.div`
   background-color: #fff;
   padding: 15px;
-  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-self: baseline;
 
   .close {
     position: absolute;
