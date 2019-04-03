@@ -126,7 +126,7 @@ class Modal extends Component {
             </PokemonDetails>
           </PokemonContent>
           { loading && <LoadingWrapper /> }
-          { similar.length && this.renderSimilars()}
+          { similar.length > 0 && this.renderSimilars()}
         </Content>
       </BackgroundWrapper>
     )
