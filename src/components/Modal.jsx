@@ -197,7 +197,6 @@ const PokemonContent = styled.div`
     align-self: flex-start;
 
     @media (max-width: 550px) {
-      width: 100%;
       order: 1;
       margin-bottom: 10px;
     }
@@ -224,10 +223,10 @@ const PokemonDetails = styled.div`
   margin-left: 20px;
 
   @media (max-width: 550px) {
-      width: 100%;
-      order: 3;
-      margin: 0px 0px 10px;
-    }
+    width: 100%;
+    order: 3;
+    margin: 0px 0px 10px;
+  }
 `
 const Label = styled.p`
   font-size: 18px;

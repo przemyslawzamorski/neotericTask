@@ -11,13 +11,13 @@ const PokemnonItem = ({ pokemonData, small, onSelect }) => (
 )
 
 const Wrapper = styled.div`
-  @media (min-width: 425px) {
+  @media (min-width: 550px) {
     ${props => (props.small
     ? `width: auto;`
     : `flex: 1 10 30%;`)};
   }
 
-  @media (max-width: 424px) {
+  @media (max-width: 550px) {
     width: 100%;
   }
 
@@ -32,6 +32,12 @@ const Wrapper = styled.div`
 
   > img {
     width: ${props => (props.small ? '200px' : '100%')};
+
+    ${props => (props.small && `
+      @media (max-width: 550px) {
+        width: 100%;
+      }
+    `)};
   }
 `
 const Name = styled.h1`
