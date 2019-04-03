@@ -39,9 +39,25 @@ class Modal extends Component {
       .then((data) => {
         if (data.ok) {
           data.json().then((resp) => {
+            let similarCount
+            const similarPokemons = []
+            if (!Array.isArray(resp.cards) || !resp.cards.length) {
+              similarCount = 0
+            } else if (resp.cards.length <= 3) {
+              similarCount = resp.cards.length
+            } else {
+              similarCount = 3
+            }
+
+            // eslint-disable-next-line no-plusplus
+            for (let i = 0; i < similarCount; i++) {
+              const index = Math.floor(Math.random() * resp.cards.length - 1)
+              similarPokemons.push(resp.cards[index])
+            }
+
             this.setState(prevState => ({
               loading: false,
-              similar: resp.cards.slice(0, 3)
+              similar: similarPokemons.filter(elem => elem)
             }))
           })
         } else {
