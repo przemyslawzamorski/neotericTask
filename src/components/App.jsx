@@ -93,7 +93,7 @@ class App extends Component {
         }
 
         { selected &&
-          <Modal pokemonData={selected} closeModalFunc={this.closeModal} />
+          <Modal pokemonData={selected} closeModalFunc={this.closeModal} onSelect={this.setSelected} />
         }
 
         <Wrapper>

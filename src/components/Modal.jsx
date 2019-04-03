@@ -12,8 +12,14 @@ class Modal extends Component {
   }
 
   componentDidMount () {
-    const { pokemonData } = this.props
-    this.getSimilarPokemons(pokemonData.hp, pokemonData.rarity, pokemonData.rarity)
+    this.getSimilarPokemons()
+  }
+
+  componentDidUpdate (prevProps) {
+    const { pokemonData: { id } } = this.props
+    if (prevProps.pokemonData.id !== id) {
+      this.getSimilarPokemons()
+    }
   }
 
   renderProperty = (propertyArray, field) => {
@@ -24,7 +30,9 @@ class Modal extends Component {
     return propertyArray.map(prop => (field ? prop[field] : prop)).join(', ')
   }
 
-  getSimilarPokemons = (hp, type, rarity) => {
+  getSimilarPokemons = (_) => {
+    const { pokemonData: { hp, type, rarity } } = this.props
+
     this.setState({ loading: true })
     // eslint-disable-next-line no-undef
     fetch(`https://api.pokemontcg.io/v1/cards?&type=${type}&rarity=${rarity}&hp=${hp}`)
@@ -49,6 +57,7 @@ class Modal extends Component {
 
   renderSimilars = (_) => {
     const { similar } = this.state
+    const { onSelect } = this.props
 
     return (
       <SimilarPokemons>
@@ -57,7 +66,12 @@ class Modal extends Component {
         </Title>
         <SimilarInner>
           {similar.map(similarPokemon => (
-            <PokemnonItem key={`${similarPokemon.name}-as-similar`} pokemonData={similarPokemon} small />))
+            <PokemnonItem
+              key={`${similarPokemon.name}-as-similar`}
+              pokemonData={similarPokemon}
+              small
+              onSelect={onSelect(similarPokemon)}
+            />))
           }
         </SimilarInner>
       </SimilarPokemons>
@@ -125,7 +139,7 @@ class Modal extends Component {
             <div className='close' onClick={e => closeModalFunc(e)} />
           </PokemonContent>
           { loading && <LoadingWrapper /> }
-          { similar.length > 0 && this.renderSimilars()}
+          { similar.length > 0 && !loading && this.renderSimilars()}
         </Content>
       </BackgroundWrapper>
     )
@@ -260,9 +274,11 @@ Modal.propTypes = {
   pokemonData: PropTypes.shape({
     imageUrlHiRes: PropTypes.string,
     name: PropTypes.string,
-    supertype: PropTypes.string
+    supertype: PropTypes.string,
+    id: PropTypes.string.isRequired
   }).isRequired,
-  closeModalFunc: PropTypes.func.isRequired
+  closeModalFunc: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired
 }
 
 export default Modal
