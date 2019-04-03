@@ -2,7 +2,19 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
+import PokemnonItem from './PokemnonItem.jsx'
+
 class Modal extends Component {
+  stat ={
+    loading: false,
+    similar: []
+  }
+
+  componentDidMount () {
+    const { pokemonData } = this.props
+    this.getSimilarPokemons(pokemonData.hp, pokemonData.rarity, pokemonData.rarity)
+  }
+
   renderProperty = (propertyArray, field) => {
     if (!Array.isArray(propertyArray)) {
       return '-'
@@ -11,7 +23,28 @@ class Modal extends Component {
     return propertyArray.map(prop => (field ? prop[field] : prop)).join(', ')
   }
 
-  getSimilarPokemons = (hp, type, rarity) => {}
+  getSimilarPokemons = (hp, type, rarity) => {
+    this.setState({ loading: true })
+    // eslint-disable-next-line no-undef
+    fetch(`https://api.pokemontcg.io/v1/cards?&type=${type}&rarity=${rarity}&hp=${hp}`)
+      .then((data) => {
+        if (data.ok) {
+          data.json().then((resp) => {
+            this.setState(prevState => ({
+              loading: false,
+              similar: resp.cards
+            }))
+          })
+        } else {
+          console.warn('Wystapił błąd')
+          this.setState({ loading: false })
+        }
+      })
+      .catch((error) => {
+        this.setState({ loading: false })
+        error && console.warn('Wystapił błąd')
+      })
+  }
 
   render () {
     const { pokemonData, closeModalFunc } = this.props
@@ -73,11 +106,19 @@ class Modal extends Component {
               </SmallItem>
             </PokemonDetails>
           </PokemonContent>
+          <SimilarPokemons>
+            <PokemnonItem pokemonData={pokemonData} small />
+          </SimilarPokemons>
         </Content>
       </BackgroundWrapper>
     )
   }
 }
+const SimilarPokemons = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`
 
 const BackgroundWrapper = styled.div`
   position: fixed;
@@ -89,6 +130,7 @@ const BackgroundWrapper = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
+  cursor: auto;
 `
 const Content = styled.div`
   background-color: #fff;
@@ -125,8 +167,8 @@ const PokemonContent = styled.div`
   display: flex;
 
   img {
-    width: 50%;
-    height: 50%;
+    width: 40%;
+    height: 40%;
   }
 `
 const PokemonDetails = styled.div`
@@ -144,7 +186,6 @@ const Label = styled.p`
     display: inline-block;
     padding-right: 5px;
   `};
-
 `
 const Value = styled.p`
   font-size: 14px;

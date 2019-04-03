@@ -20,10 +20,10 @@ class PokemnonItem extends Component {
 
   render () {
     const { isModalVisible } = this.state
-    const { pokemonData } = this.props
+    const { pokemonData, small } = this.props
 
     return (
-      <Wrapper onClick={e => this.openModal()}>
+      <Wrapper small={small} onClick={e => (!small ? this.openModal() : null)}>
         <img src={pokemonData.imageUrlHiRes} alt='fotka' />
         <Name>{pokemonData.name}</Name>
         <Supertype>{pokemonData.supertype}</Supertype>
@@ -52,13 +52,13 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+
   cursor: pointer;
 
   > img {
     width: 100%;
   }
 `
-
 const Name = styled.h1`
   display: flex;
   font-family: Lato;
@@ -66,7 +66,6 @@ const Name = styled.h1`
   justify-content: center;
   margin: 5px;
 `
-
 const Supertype = styled.h2`
   font-family: Lato;
   font-size: 15px;
@@ -81,7 +80,12 @@ PokemnonItem.propTypes = {
     imageUrlHiRes: PropTypes.string,
     name: PropTypes.string,
     supertype: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  small: PropTypes.bool
+}
+
+PokemnonItem.defaultProps = {
+  small: false
 }
 
 export default PokemnonItem
