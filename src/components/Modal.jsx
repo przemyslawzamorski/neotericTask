@@ -29,17 +29,43 @@ const Modal = ({ pokemonData, closeModalFunc }) => {
             <Value>{pokemonData.series}</Value>
 
             <Label>DETAILS</Label>
-            <Label small>Resistances: </Label>
-            <Value small>{renderProperty(pokemonData.resistances, 'type')}</Value>
+            <SmallItem>
+              <Label small>Resistances: </Label>
+              <Value small>{renderProperty(pokemonData.resistances, 'type')}</Value>
+            </SmallItem>
+            <SmallItem>
+              <Label small>Weaknesses: </Label>
+              <Value small>{renderProperty(pokemonData.weaknesses, 'type')}</Value>
+            </SmallItem>
 
-            <Label small>Weaknesses: </Label>
-            <Value small>{renderProperty(pokemonData.weaknesses, 'type')}</Value>
-
-            <Label small>Types </Label>
-            <Value small>{renderProperty(pokemonData.types)}</Value>
-
-            <Label small>Attacks: </Label>
-            <Value small>{renderProperty(pokemonData.attacks, 'name')}</Value>
+            <SmallItem>
+              <Label small>Types </Label>
+              <Value small>{renderProperty(pokemonData.types)}</Value>
+            </SmallItem>
+            <SmallItem>
+              <Label small>Attacks: </Label>
+              <Value small>{renderProperty(pokemonData.attacks, 'name')}</Value>
+            </SmallItem>
+            <SmallItem>
+              <Label small>Rarity: </Label>
+              <Value small>{pokemonData.rarity}</Value>
+            </SmallItem>
+            <SmallItem>
+              <Label small>National Pokedex Number: </Label>
+              <Value small>{pokemonData.nationalPokedexNumber}</Value>
+            </SmallItem>
+            <SmallItem>
+              <Label small>Healthy points: </Label>
+              <Value small>{pokemonData.hp}</Value>
+            </SmallItem>
+            <SmallItem>
+              <Label small>Set: </Label>
+              <Value small>{pokemonData.set}</Value>
+            </SmallItem>
+            <SmallItem>
+              <Label small>Evolves from: </Label>
+              <Value small>{pokemonData.evolvesFrom || '-'}</Value>
+            </SmallItem>
           </PokemonDetails>
         </PokemonContent>
       </Content>
@@ -58,7 +84,6 @@ const BackgroundWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `
-
 const Content = styled.div`
   background-color: #fff;
   padding: 15px;
@@ -90,7 +115,6 @@ const Content = styled.div`
     transform: rotate(-45deg);
   }
 `
-
 const PokemonContent = styled.div`
   display: flex;
 
@@ -99,7 +123,6 @@ const PokemonContent = styled.div`
     height: 50%;
   }
 `
-
 const PokemonDetails = styled.div`
   margin-left: 10px;
   padding: 10px;
@@ -112,6 +135,8 @@ const Label = styled.p`
 
   ${props => props.small && `
     font-size: 14px;
+    display: inline-block;
+    padding-right: 5px;
   `};
 
 `
@@ -125,6 +150,7 @@ const Value = styled.p`
     display: inline-block;
   `};
 `
+const SmallItem = styled.div``
 
 Modal.propTypes = {
   pokemonData: PropTypes.shape({
