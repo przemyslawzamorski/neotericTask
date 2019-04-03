@@ -135,6 +135,8 @@ class Modal extends Component {
 const SimilarInner = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 `
 const SimilarPokemons = styled.div`
   display: flex;
