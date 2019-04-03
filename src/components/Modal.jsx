@@ -1,13 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { isArray } from 'util'
 
-const Modal = ({ pokemonData }) => {
-  const cos = ''
-
+const Modal = ({ pokemonData, closeModalFunc }) => {
   const renderProperty = (propertyArray, field) => {
-    if (!isArray(propertyArray)) {
+    if (!Array.isArray(propertyArray)) {
       return '-'
     }
 
@@ -17,7 +14,7 @@ const Modal = ({ pokemonData }) => {
   return (
     <BackgroundWrapper>
       <Content>
-        <div className='close' />
+        <div className='close' onClick={e => closeModalFunc(e)} />
 
         <PokemonContent>
           <img src={pokemonData.imageUrlHiRes} alt='details-foto' />
@@ -134,7 +131,8 @@ Modal.propTypes = {
     imageUrlHiRes: PropTypes.string,
     name: PropTypes.string,
     supertype: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  closeModalFunc: PropTypes.func.isRequired
 }
 
 export default Modal

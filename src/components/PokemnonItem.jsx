@@ -9,17 +9,28 @@ class PokemnonItem extends Component {
     isModalVisible: false
   }
 
+  closeModal = (event) => {
+    event.stopPropagation()
+    this.setState({ isModalVisible: false })
+  }
+
+  openModal = (_) => {
+    this.setState({ isModalVisible: true })
+  }
+
   render () {
     const { isModalVisible } = this.state
     const { pokemonData } = this.props
 
     return (
-      <Wrapper onClick={e => this.setState({ isModalVisible: true })}>
+      <Wrapper onClick={e => this.openModal()}>
         <img src={pokemonData.imageUrlHiRes} alt='fotka' />
         <Name>{pokemonData.name}</Name>
         <Supertype>{pokemonData.supertype}</Supertype>
 
-        { isModalVisible && <Modal pokemonData={pokemonData} /> }
+        { isModalVisible &&
+          <Modal pokemonData={pokemonData} closeModalFunc={this.closeModal} />
+        }
       </Wrapper>
     )
   }
